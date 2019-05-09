@@ -1,0 +1,19 @@
+{
+  "main_screen": "الرئيسية",
+  "select_page": "اختر الصفحة",
+  "drawer_navigation": "القائمة الجانبية الملاحة",
+  "drawer_material": "القائمة الجانبية ماتيريال",
+  "tabs_navigation": "تابات ملاحة",
+  "tabs_navigation_material": "تابات ملاحة ماتيريال",
+  "tabs_material": "تابات ماتيريال",
+  "drawer_item_1": "عنصر جانبي ١",
+  "drawer_item_2": "عنصر جانبي ٢",
+  "drawer_item_3": "عنصر جانبي ٣",
+  "drawer_item_4": "عنصر جانبي ٤",
+  "drawer_item_5": "عنصر جانبي ٥",
+  "tab_1": "تاب ١",
+  "tab_2": "تاب ٢",
+  "tab_3": "تاب ٣",
+  "tab_4": "تاب ٤",
+  "tab_5": "تاب ٥"
+}

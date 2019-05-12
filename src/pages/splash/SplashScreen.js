@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  StatusBar, SafeAreaView, View, Text,
+  SafeAreaView, StatusBar, View, Text,
 } from 'react-native';
 import { COLOR, Button } from 'react-native-material-ui';
 import PropTypes from 'prop-types';

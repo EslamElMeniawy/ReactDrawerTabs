@@ -15,7 +15,7 @@ export const LANGUAGE_KEY = 'Language';
 export async function getData(key) {
   try {
     const value = await AsyncStorage.getItem(key);
-    Log(`Value for "${key}": `, value);
+    Log(`Value for "${key}": "${value}"`);
     return value;
   } catch (e) {
     // Error reading value.

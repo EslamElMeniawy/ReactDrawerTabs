@@ -1,4 +1,8 @@
 {
+  "select_lang": "اختر لغة التطبيق",
+  "arabic": "العربية",
+  "english": "الإنجليزية",
+  "error_save_language": "خطأ اثناء حفظ اللغة",
   "main_screen": "الرئيسية",
   "select_page": "اختر الصفحة",
   "drawer_navigation": "القائمة الجانبية الملاحة",

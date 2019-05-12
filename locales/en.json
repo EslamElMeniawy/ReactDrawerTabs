@@ -1,4 +1,8 @@
 {
+  "select_lang": "Select app language",
+  "arabic": "Arabic",
+  "english": "English",
+  "error_save_language": "Error saving language",
   "main_screen": "Main",
   "select_page": "Select Page",
   "drawer_navigation": "Drawer Navigation",

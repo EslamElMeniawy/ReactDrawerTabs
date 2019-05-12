@@ -1,10 +1,12 @@
 import React from 'react';
 import { SafeAreaView, Text } from 'react-native';
 
+import { strings } from '../../../locales/i18n';
+
 export default function TabsNavigationMaterialScreen() {
   return (
     <SafeAreaView>
-      <Text>TabsNavigationMaterialScreen</Text>
+      <Text>{strings('tabs_navigation_material')}</Text>
     </SafeAreaView>
   );
 }

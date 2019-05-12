@@ -10,6 +10,7 @@ import DrawerMaterialScreen from './pages/drawer_material/DrawerMaterialScreen';
 import TabsNavigationScreen from './pages/tabs_navigation/TabsNavigationScreen';
 import TabsNavigationMaterialScreen from './pages/tabs_navigation_material/TabsNavigationMaterialScreen';
 import TabsMaterialScreen from './pages/tabs_material/TabsMaterialScreen';
+import SettingsScreen from './pages/settings/SettingsScreen';
 import { getData, LANGUAGE_KEY } from './utils/AsyncStorageUtils';
 import { setLocale, defaultLocale } from '../locales/i18n';
 
@@ -22,6 +23,7 @@ const AppStack = createStackNavigator(
     TabsNavigation: TabsNavigationScreen,
     TabsNavigationMaterial: TabsNavigationMaterialScreen,
     TabsMaterial: TabsMaterialScreen,
+    Settings: SettingsScreen,
   },
   {
     initialRouteName: 'Main',

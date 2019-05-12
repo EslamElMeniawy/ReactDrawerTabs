@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 
 import Styles from './Styles';
 import { getData, setData, LANGUAGE_KEY } from '../../utils/AsyncStorageUtils';
+import { LANGUAGE_AR, LANGUAGE_EN } from '../../utils/Languages';
 import { setLocale, strings } from '../../../locales/i18n';
 
 export default class SplashScreen extends Component {
@@ -59,7 +60,7 @@ export default class SplashScreen extends Component {
           primary
           text={strings('arabic')}
           onPress={() => {
-            this.setLang('ar');
+            this.setLang(LANGUAGE_AR);
           }}
         />
         <Button
@@ -67,7 +68,7 @@ export default class SplashScreen extends Component {
           primary
           text={strings('english')}
           onPress={() => {
-            this.setLang('en');
+            this.setLang(LANGUAGE_EN);
           }}
         />
       </View>

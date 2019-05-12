@@ -1,56 +1,111 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { SafeAreaView, StatusBar, Text } from 'react-native';
 import { COLOR, Toolbar, Button } from 'react-native-material-ui';
 import PropTypes from 'prop-types';
 
 import { strings } from '../../../locales/i18n';
+import { getData, LANGUAGE_KEY } from '../../utils/AsyncStorageUtils';
+import { LANGUAGE_AR, LANGUAGE_EN } from '../../utils/Languages';
 import Styles from './Styles';
 
-function openPage(navigation, page) {
-  navigation.navigate(page);
-}
+export default class MainScreen extends Component {
+  state = {
+    userLanguage: LANGUAGE_EN,
+    toolbarStyle: Styles.toolbarHideLeft,
+  };
 
-function getPrimaryButton(navigation, page, text) {
-  return (
+  componentDidMount() {
+    this.getToolbarStyle();
+  }
+
+  getToolbarStyle = () => {
+    getData(LANGUAGE_KEY).then((userLanguage) => {
+      if (userLanguage) {
+        switch (userLanguage) {
+          case LANGUAGE_AR:
+            this.setState({ userLanguage, toolbarStyle: Styles.toolbarHideRight });
+            break;
+          case LANGUAGE_EN:
+            this.setState({ userLanguage, toolbarStyle: Styles.toolbarHideLeft });
+            break;
+          default:
+            this.setState({ userLanguage, toolbarStyle: Styles.toolbarHideLeft });
+            break;
+        }
+      } else {
+        this.setState({ userLanguage: LANGUAGE_EN, toolbarStyle: Styles.toolbarHideLeft });
+      }
+    });
+  };
+
+  openPage = (page) => {
+    const { navigation } = this.props;
+    navigation.navigate(page);
+  };
+
+  getPrimaryButton = (page, text) => (
     <Button
       style={Styles.button}
       raised
       primary
       text={text}
       onPress={() => {
-        openPage(navigation, page);
+        this.openPage(page);
       }}
     />
   );
-}
 
-function getAccentButton(navigation, page, text) {
-  return (
+  getAccentButton = (page, text) => (
     <Button
       style={Styles.button}
       raised
       accent
       text={text}
       onPress={() => {
-        openPage(navigation, page);
+        this.openPage(page);
       }}
     />
   );
-}
 
-export default function MainScreen({ navigation }) {
-  return (
-    <SafeAreaView>
-      <StatusBar barStyle="light-content" backgroundColor={COLOR.blueGrey900} />
-      <Toolbar centerElement={strings('main_screen')} />
-      <Text style={Styles.selectPage}>{strings('select_page')}</Text>
-      {getPrimaryButton(navigation, 'DrawerNavigation', strings('drawer_navigation'))}
-      {getAccentButton(navigation, 'DrawerMaterial', strings('drawer_material'))}
-      {getPrimaryButton(navigation, 'TabsNavigation', strings('tabs_navigation'))}
-      {getAccentButton(navigation, 'TabsNavigationMaterial', strings('tabs_navigation_material'))}
-      {getPrimaryButton(navigation, 'TabsMaterial', strings('tabs_material'))}
-    </SafeAreaView>
-  );
+  handleLeftElementPress = () => {
+    const { userLanguage } = this.state;
+
+    if (userLanguage === LANGUAGE_AR) {
+      this.openPage('Settings');
+    }
+  };
+
+  handleRightElementPress = () => {
+    const { userLanguage } = this.state;
+
+    if (userLanguage === LANGUAGE_EN) {
+      this.openPage('Settings');
+    }
+  };
+
+  render() {
+    const { toolbarStyle } = this.state;
+
+    return (
+      <SafeAreaView>
+        <StatusBar barStyle="light-content" backgroundColor={COLOR.blueGrey900} />
+        <Toolbar
+          style={toolbarStyle}
+          leftElement="settings"
+          onLeftElementPress={() => this.handleLeftElementPress()}
+          centerElement={strings('main_screen')}
+          rightElement="settings"
+          onRightElementPress={() => this.handleRightElementPress()}
+        />
+        <Text style={Styles.selectPage}>{strings('select_page')}</Text>
+        {this.getPrimaryButton('DrawerNavigation', strings('drawer_navigation'))}
+        {this.getAccentButton('DrawerMaterial', strings('drawer_material'))}
+        {this.getPrimaryButton('TabsNavigation', strings('tabs_navigation'))}
+        {this.getAccentButton('TabsNavigationMaterial', strings('tabs_navigation_material'))}
+        {this.getPrimaryButton('TabsMaterial', strings('tabs_material'))}
+      </SafeAreaView>
+    );
+  }
 }
 
 MainScreen.propTypes = {

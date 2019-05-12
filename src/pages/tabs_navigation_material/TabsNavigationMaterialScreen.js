@@ -9,7 +9,11 @@ export default function TabsNavigationMaterialScreen() {
   return (
     <SafeAreaView>
       <StatusBar barStyle="light-content" backgroundColor={COLOR.blueGrey900} />
-      <Toolbar centerElement={strings('tabs_navigation_material')} />
+      <Toolbar
+        leftElement="arrow-back"
+        centerElement={strings('tabs_navigation_material')}
+        rightElement="arrow-back"
+      />
     </SafeAreaView>
   );
 }

@@ -11,7 +11,7 @@ import Styles from './Styles';
 export default class TabsNavigationScreen extends Component {
   state = {
     userLanguage: LANGUAGE_EN,
-    toolbarStyle: Styles.toolbarHideLeft,
+    toolbarStyle: Styles.toolbarHideRight,
   };
 
   componentDidMount() {

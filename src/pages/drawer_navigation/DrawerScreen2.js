@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { SafeAreaView, StatusBar } from 'react-native';
-import { COLOR, Toolbar } from 'react-native-material-ui';
+import { COLOR, Toolbar, Icon } from 'react-native-material-ui';
 import PropTypes from 'prop-types';
 
 import { strings, defaultLocale } from '../../../locales/i18n';
@@ -8,7 +8,12 @@ import { getData, LANGUAGE_KEY } from '../../utils/AsyncStorageUtils';
 import { LANGUAGE_AR, LANGUAGE_EN } from '../../utils/Languages';
 import Styles from './Styles';
 
-export default class DrawerNavigationScreen extends Component {
+export default class DrawerScreen2 extends Component {
+  static navigationOptions = {
+    drawerLabel: strings('drawer_item_2'),
+    drawerIcon: ({ tintColor }) => <Icon name="alarm-on" color={tintColor} size={24} />,
+  };
+
   state = {
     userLanguage: defaultLocale,
     toolbarStyle: Styles.toolbarHideLeft,
@@ -69,7 +74,7 @@ export default class DrawerNavigationScreen extends Component {
           style={toolbarStyle}
           leftElement="menu"
           onLeftElementPress={() => this.handleLeftElementPress()}
-          centerElement={strings('drawer_navigation')}
+          centerElement={strings('drawer_item_2')}
           rightElement="menu"
           onRightElementPress={() => this.handleRightElementPress()}
         />
@@ -78,7 +83,7 @@ export default class DrawerNavigationScreen extends Component {
   }
 }
 
-DrawerNavigationScreen.propTypes = {
+DrawerScreen2.propTypes = {
   navigation: PropTypes.shape({
     openDrawer: PropTypes.func.isRequired,
   }).isRequired,

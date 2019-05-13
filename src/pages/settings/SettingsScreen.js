@@ -6,14 +6,14 @@ import { COLOR, Toolbar, RadioButton } from 'react-native-material-ui';
 import PropTypes from 'prop-types';
 import { NavigationActions } from 'react-navigation';
 
-import { strings, setLocale } from '../../../locales/i18n';
+import { strings, setLocale, defaultLocale } from '../../../locales/i18n';
 import { getData, LANGUAGE_KEY, setData } from '../../utils/AsyncStorageUtils';
 import { LANGUAGE_AR, LANGUAGE_EN } from '../../utils/Languages';
 import Styles from './Styles';
 
 export default class SettingsScreen extends Component {
   state = {
-    userLanguage: LANGUAGE_EN,
+    userLanguage: defaultLocale,
     toolbarStyle: Styles.toolbarHideRight,
     radioStyle: Styles.radio,
     arabicChecked: false,
@@ -58,7 +58,7 @@ export default class SettingsScreen extends Component {
         }
       } else {
         this.setState({
-          userLanguage,
+          userLanguage: defaultLocale,
           toolbarStyle: Styles.toolbarHideRight,
           radioStyle: Styles.radio,
           arabicChecked: false,

@@ -3,14 +3,14 @@ import { SafeAreaView, StatusBar, Text } from 'react-native';
 import { COLOR, Toolbar, Button } from 'react-native-material-ui';
 import PropTypes from 'prop-types';
 
-import { strings } from '../../../locales/i18n';
+import { strings, defaultLocale } from '../../../locales/i18n';
 import { getData, LANGUAGE_KEY } from '../../utils/AsyncStorageUtils';
 import { LANGUAGE_AR, LANGUAGE_EN } from '../../utils/Languages';
 import Styles from './Styles';
 
 export default class MainScreen extends Component {
   state = {
-    userLanguage: LANGUAGE_EN,
+    userLanguage: defaultLocale,
     toolbarStyle: Styles.toolbarHideLeft,
   };
 
@@ -33,7 +33,7 @@ export default class MainScreen extends Component {
             break;
         }
       } else {
-        this.setState({ userLanguage: LANGUAGE_EN, toolbarStyle: Styles.toolbarHideLeft });
+        this.setState({ userLanguage: defaultLocale, toolbarStyle: Styles.toolbarHideLeft });
       }
     });
   };
@@ -84,7 +84,7 @@ export default class MainScreen extends Component {
   };
 
   render() {
-    const { toolbarStyle } = this.state;
+    const { toolbarStyle, userLanguage } = this.state;
 
     return (
       <SafeAreaView>
@@ -98,7 +98,10 @@ export default class MainScreen extends Component {
           onRightElementPress={() => this.handleRightElementPress()}
         />
         <Text style={Styles.selectPage}>{strings('select_page')}</Text>
-        {this.getPrimaryButton('DrawerNavigation', strings('drawer_navigation'))}
+        {this.getPrimaryButton(
+          userLanguage === LANGUAGE_AR ? 'DrawerNavigationRight' : 'DrawerNavigationLeft',
+          strings('drawer_navigation'),
+        )}
         {this.getAccentButton('DrawerMaterial', strings('drawer_material'))}
         {this.getPrimaryButton('TabsNavigation', strings('tabs_navigation'))}
         {this.getAccentButton('TabsNavigationMaterial', strings('tabs_navigation_material'))}

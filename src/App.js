@@ -1,11 +1,20 @@
 import React from 'react';
-import { createStackNavigator, createSwitchNavigator, createAppContainer } from 'react-navigation';
+import {
+  createDrawerNavigator,
+  createStackNavigator,
+  createSwitchNavigator,
+  createAppContainer,
+} from 'react-navigation';
 import { COLOR, ThemeContext, getTheme } from 'react-native-material-ui';
 import { PixelRatio } from 'react-native';
 
 import SplashScreen from './pages/splash/SplashScreen';
 import MainScreen from './pages/main/MainScreen';
-import DrawerNavigationScreen from './pages/drawer_navigation/DrawerNavigationScreen';
+import DrawerNavigationScreenEn from './pages/drawer_navigation/DrawerNavigationScreenEn';
+import DrawerNavigationScreenAr from './pages/drawer_navigation/DrawerNavigationScreenAr';
+import DrawerScreen1 from './pages/drawer_navigation/DrawerScreen1';
+import DrawerScreen2 from './pages/drawer_navigation/DrawerScreen2';
+import DrawerContentComponent from './pages/drawer_navigation/DrawerContentComponent';
 import DrawerMaterialScreen from './pages/drawer_material/DrawerMaterialScreen';
 import TabsNavigationScreen from './pages/tabs_navigation/TabsNavigationScreen';
 import TabsNavigationMaterialScreen from './pages/tabs_navigation_material/TabsNavigationMaterialScreen';
@@ -14,11 +23,53 @@ import SettingsScreen from './pages/settings/SettingsScreen';
 import { getData, LANGUAGE_KEY } from './utils/AsyncStorageUtils';
 import { setLocale, defaultLocale } from '../locales/i18n';
 
+const contentOptions = {
+  activeTintColor: COLOR.deepOrange300,
+  inactiveTintColor: COLOR.blueGrey500,
+};
+
+const DrawerNavigatorLeft = createDrawerNavigator(
+  {
+    DrawerNavigation: DrawerNavigationScreenEn,
+    Drawer1: DrawerScreen1,
+    Drawer2: DrawerScreen2,
+  },
+  {
+    contentComponent: DrawerContentComponent,
+    drawerPosition: 'left',
+    contentOptions,
+  },
+);
+
+const DrawerNavigatorRight = createDrawerNavigator(
+  {
+    DrawerNavigationAr: DrawerNavigationScreenAr,
+    Drawer1: DrawerScreen1,
+    Drawer2: DrawerScreen2,
+  },
+  {
+    contentComponent: DrawerContentComponent,
+    drawerPosition: 'right',
+    contentOptions: {
+      ...contentOptions,
+      ...{
+        itemsContainerStyle: {
+          transform: [{ rotateY: '180deg' }],
+        },
+        labelStyle: {
+          transform: [{ rotateY: '180deg' }],
+        },
+      },
+    },
+  },
+);
+
 // Setup app stack for opening inner app screens after splash as stack.
 const AppStack = createStackNavigator(
   {
     Main: MainScreen,
-    DrawerNavigation: DrawerNavigationScreen,
+    DrawerNavigationLeft: DrawerNavigatorLeft,
+    DrawerNavigationRight: DrawerNavigatorRight,
     DrawerMaterial: DrawerMaterialScreen,
     TabsNavigation: TabsNavigationScreen,
     TabsNavigationMaterial: TabsNavigationMaterialScreen,

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { SafeAreaView, StatusBar } from 'react-native';
-import { COLOR, Toolbar } from 'react-native-material-ui';
+import { SafeAreaView, StatusBar, View } from 'react-native';
+import {
+  COLOR, Toolbar, Drawer, Avatar,
+} from 'react-native-material-ui';
 
 import { strings } from '../../../locales/i18n';
 import { getData, LANGUAGE_KEY } from '../../utils/AsyncStorageUtils';
@@ -69,6 +71,31 @@ export default class DrawerMaterial extends Component {
           rightElement="menu"
           onRightElementPress={() => this.handleRightElementPress()}
         />
+        <View
+          style={{
+            flex: 1,
+            width: 260,
+            elevation: 4,
+            backgroundColor: 'white',
+          }}
+        >
+          <Drawer>
+            <Drawer.Section
+              key="key1"
+              divider
+              items={[
+                { icon: 'bookmark-border', value: 'Notifications' },
+                { icon: 'today', value: 'Calendar', active: true },
+                { icon: 'people', value: 'Clients' },
+              ]}
+            />
+            <Drawer.Section
+              key="key2"
+              title="Personal"
+              items={[{ icon: 'info', value: 'Info' }, { icon: 'settings', value: 'Settings' }]}
+            />
+          </Drawer>
+        </View>
       </SafeAreaView>
     );
   }

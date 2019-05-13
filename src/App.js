@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   createDrawerNavigator,
+  createBottomTabNavigator,
   createStackNavigator,
   createSwitchNavigator,
   createAppContainer,
@@ -16,18 +17,23 @@ import DrawerScreen1 from './pages/drawer_navigation/DrawerScreen1';
 import DrawerScreen2 from './pages/drawer_navigation/DrawerScreen2';
 import DrawerContentComponent from './pages/drawer_navigation/DrawerContentComponent';
 import DrawerMaterialScreen from './pages/drawer_material/DrawerMaterialScreen';
-import TabsNavigationScreen from './pages/tabs_navigation/TabsNavigationScreen';
+import TabsNavigationScreenAr from './pages/tabs_navigation/TabsNavigationScreenAr';
+import TabsNavigationScreenEn from './pages/tabs_navigation/TabsNavigationScreenEn';
+import Tabs1 from './pages/tabs_navigation/Tabs1';
+import Tabs2 from './pages/tabs_navigation/Tabs2';
 import TabsNavigationMaterialScreen from './pages/tabs_navigation_material/TabsNavigationMaterialScreen';
 import TabsMaterialScreen from './pages/tabs_material/TabsMaterialScreen';
 import SettingsScreen from './pages/settings/SettingsScreen';
 import { getData, LANGUAGE_KEY } from './utils/AsyncStorageUtils';
 import { setLocale, defaultLocale } from '../locales/i18n';
 
+// Content options for drawer navigator.
 const contentOptions = {
   activeTintColor: COLOR.deepOrange300,
   inactiveTintColor: COLOR.blueGrey500,
 };
 
+// Drawer left navigator.
 const DrawerNavigatorLeft = createDrawerNavigator(
   {
     DrawerNavigation: DrawerNavigationScreenEn,
@@ -41,6 +47,7 @@ const DrawerNavigatorLeft = createDrawerNavigator(
   },
 );
 
+// Drawer right navigator.
 const DrawerNavigatorRight = createDrawerNavigator(
   {
     DrawerNavigationAr: DrawerNavigationScreenAr,
@@ -64,6 +71,44 @@ const DrawerNavigatorRight = createDrawerNavigator(
   },
 );
 
+// Tab bar options for bottom tab navigator.
+const tabBarOptions = {
+  activeTintColor: COLOR.deepOrange300,
+  inactiveTintColor: COLOR.blueGrey500,
+};
+
+// Bottom tab navigator for arabic.
+const BottomTabNavigatorAr = createBottomTabNavigator(
+  {
+    TabsNavigation: TabsNavigationScreenAr,
+    Tabs1,
+    Tabs2,
+  },
+  {
+    tabBarOptions: {
+      ...tabBarOptions,
+      ...{
+        style: {
+          transform: [{ rotateY: '180deg' }],
+        },
+        labelStyle: {
+          transform: [{ rotateY: '180deg' }],
+        },
+      },
+    },
+  },
+);
+
+// Bottom tab navigator for english.
+const BottomTabNavigatorEn = createBottomTabNavigator(
+  {
+    TabsNavigation: TabsNavigationScreenEn,
+    Tabs1,
+    Tabs2,
+  },
+  { tabBarOptions },
+);
+
 // Setup app stack for opening inner app screens after splash as stack.
 const AppStack = createStackNavigator(
   {
@@ -71,7 +116,8 @@ const AppStack = createStackNavigator(
     DrawerNavigationLeft: DrawerNavigatorLeft,
     DrawerNavigationRight: DrawerNavigatorRight,
     DrawerMaterial: DrawerMaterialScreen,
-    TabsNavigation: TabsNavigationScreen,
+    TabsNavigationAr: BottomTabNavigatorAr,
+    TabsNavigationEn: BottomTabNavigatorEn,
     TabsNavigationMaterial: TabsNavigationMaterialScreen,
     TabsMaterial: TabsMaterialScreen,
     Settings: SettingsScreen,

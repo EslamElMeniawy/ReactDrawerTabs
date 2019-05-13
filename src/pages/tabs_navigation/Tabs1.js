@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
-import { SafeAreaView, StatusBar, View } from 'react-native';
-import { COLOR, Toolbar, Drawer } from 'react-native-material-ui';
+import { SafeAreaView, StatusBar } from 'react-native';
+import { COLOR, Toolbar } from 'react-native-material-ui';
+import PropTypes from 'prop-types';
 
 import { strings } from '../../../locales/i18n';
 import { getData, LANGUAGE_KEY } from '../../utils/AsyncStorageUtils';
 import { LANGUAGE_AR, LANGUAGE_EN } from '../../utils/Languages';
 import Styles from './Styles';
 
-export default class DrawerMaterial extends Component {
+export default class Tabs1 extends Component {
   state = {
     userLanguage: LANGUAGE_EN,
-    toolbarStyle: Styles.toolbarHideLeft,
+    toolbarStyle: Styles.toolbarHideRight,
   };
 
   componentDidMount() {
@@ -37,13 +38,16 @@ export default class DrawerMaterial extends Component {
     });
   };
 
-  toggleDrawer = () => {};
+  goBack = () => {
+    const { navigation } = this.props;
+    navigation.goBack();
+  };
 
   handleLeftElementPress = () => {
     const { userLanguage } = this.state;
 
     if (userLanguage === LANGUAGE_EN) {
-      this.toggleDrawer();
+      this.goBack();
     }
   };
 
@@ -51,7 +55,7 @@ export default class DrawerMaterial extends Component {
     const { userLanguage } = this.state;
 
     if (userLanguage === LANGUAGE_AR) {
-      this.toggleDrawer();
+      this.goBack();
     }
   };
 
@@ -63,38 +67,19 @@ export default class DrawerMaterial extends Component {
         <StatusBar barStyle="light-content" backgroundColor={COLOR.blueGrey900} />
         <Toolbar
           style={toolbarStyle}
-          leftElement="menu"
+          leftElement="arrow-back"
           onLeftElementPress={() => this.handleLeftElementPress()}
-          centerElement={strings('drawer_material')}
-          rightElement="menu"
+          centerElement={strings('tab_1')}
+          rightElement="arrow-forward"
           onRightElementPress={() => this.handleRightElementPress()}
         />
-        <View
-          style={{
-            flex: 1,
-            width: 260,
-            elevation: 4,
-            backgroundColor: 'white',
-          }}
-        >
-          <Drawer>
-            <Drawer.Section
-              key="key1"
-              divider
-              items={[
-                { icon: 'bookmark-border', value: 'Notifications' },
-                { icon: 'today', value: 'Calendar', active: true },
-                { icon: 'people', value: 'Clients' },
-              ]}
-            />
-            <Drawer.Section
-              key="key2"
-              title="Personal"
-              items={[{ icon: 'info', value: 'Info' }, { icon: 'settings', value: 'Settings' }]}
-            />
-          </Drawer>
-        </View>
       </SafeAreaView>
     );
   }
 }
+
+Tabs1.propTypes = {
+  navigation: PropTypes.shape({
+    goBack: PropTypes.func.isRequired,
+  }).isRequired,
+};

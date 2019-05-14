@@ -3,15 +3,15 @@ import { SafeAreaView, StatusBar } from 'react-native';
 import { COLOR, Toolbar } from 'react-native-material-ui';
 import PropTypes from 'prop-types';
 
-import { strings } from '../../../locales/i18n';
+import { strings, defaultLocale } from '../../../locales/i18n';
 import { getData, LANGUAGE_KEY } from '../../utils/AsyncStorageUtils';
 import { LANGUAGE_AR, LANGUAGE_EN } from '../../utils/Languages';
 import Styles from './Styles';
 
-export default class TabsNavigationMaterialScreen extends Component {
+export default class DrawerScreen1 extends Component {
   state = {
-    userLanguage: LANGUAGE_EN,
-    toolbarStyle: Styles.toolbarHideRight,
+    userLanguage: defaultLocale,
+    toolbarStyle: Styles.toolbarHideLeft,
   };
 
   componentDidMount() {
@@ -33,21 +33,21 @@ export default class TabsNavigationMaterialScreen extends Component {
             break;
         }
       } else {
-        this.setState({ userLanguage: LANGUAGE_EN, toolbarStyle: Styles.toolbarHideRight });
+        this.setState({ userLanguage: defaultLocale, toolbarStyle: Styles.toolbarHideRight });
       }
     });
   };
 
-  goBack = () => {
+  openDrawer = () => {
     const { navigation } = this.props;
-    navigation.goBack();
+    navigation.openDrawer();
   };
 
   handleLeftElementPress = () => {
     const { userLanguage } = this.state;
 
     if (userLanguage === LANGUAGE_EN) {
-      this.goBack();
+      this.openDrawer();
     }
   };
 
@@ -55,7 +55,7 @@ export default class TabsNavigationMaterialScreen extends Component {
     const { userLanguage } = this.state;
 
     if (userLanguage === LANGUAGE_AR) {
-      this.goBack();
+      this.openDrawer();
     }
   };
 
@@ -67,10 +67,10 @@ export default class TabsNavigationMaterialScreen extends Component {
         <StatusBar barStyle="light-content" backgroundColor={COLOR.blueGrey900} />
         <Toolbar
           style={toolbarStyle}
-          leftElement="arrow-back"
+          leftElement="menu"
           onLeftElementPress={() => this.handleLeftElementPress()}
-          centerElement={strings('tabs_navigation_material')}
-          rightElement="arrow-forward"
+          centerElement={strings('drawer_item_1')}
+          rightElement="menu"
           onRightElementPress={() => this.handleRightElementPress()}
         />
       </SafeAreaView>
@@ -78,8 +78,8 @@ export default class TabsNavigationMaterialScreen extends Component {
   }
 }
 
-TabsNavigationMaterialScreen.propTypes = {
+DrawerScreen1.propTypes = {
   navigation: PropTypes.shape({
-    goBack: PropTypes.func.isRequired,
+    openDrawer: PropTypes.func.isRequired,
   }).isRequired,
 };

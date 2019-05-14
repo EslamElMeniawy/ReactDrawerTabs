@@ -6,22 +6,25 @@ import {
   createSwitchNavigator,
   createAppContainer,
 } from 'react-navigation';
+import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import { COLOR, ThemeContext, getTheme } from 'react-native-material-ui';
 import { PixelRatio } from 'react-native';
 
 import SplashScreen from './pages/splash/SplashScreen';
 import MainScreen from './pages/main/MainScreen';
-import DrawerNavigationScreenEn from './pages/drawer_navigation/DrawerNavigationScreenEn';
-import DrawerNavigationScreenAr from './pages/drawer_navigation/DrawerNavigationScreenAr';
-import DrawerScreen1 from './pages/drawer_navigation/DrawerScreen1';
-import DrawerScreen2 from './pages/drawer_navigation/DrawerScreen2';
-import DrawerContentComponent from './pages/drawer_navigation/DrawerContentComponent';
-import DrawerMaterialScreen from './pages/drawer_material/DrawerMaterialScreen';
-import TabsNavigationScreenAr from './pages/tabs_navigation/TabsNavigationScreenAr';
-import TabsNavigationScreenEn from './pages/tabs_navigation/TabsNavigationScreenEn';
-import Tabs1 from './pages/tabs_navigation/Tabs1';
-import Tabs2 from './pages/tabs_navigation/Tabs2';
-import TabsNavigationMaterialScreen from './pages/tabs_navigation_material/TabsNavigationMaterialScreen';
+import DrawerNavigationScreenEn from './pages/drawer/en/DrawerNavigationScreen';
+import DrawerNavigationScreenAr from './pages/drawer/ar/DrawerNavigationScreen';
+import DrawerScreen1En from './pages/drawer/en/DrawerScreen1';
+import DrawerScreen1Ar from './pages/drawer/ar/DrawerScreen1';
+import DrawerScreen2En from './pages/drawer/en/DrawerScreen2';
+import DrawerScreen2Ar from './pages/drawer/ar/DrawerScreen2';
+import DrawerContentComponent from './pages/drawer/DrawerContentComponent';
+import TabsNavigationScreenEn from './pages/tabs/en/TabsNavigationScreen';
+import TabsNavigationScreenAr from './pages/tabs/ar/TabsNavigationScreen';
+import Tabs1En from './pages/tabs/en/Tabs1';
+import Tabs1Ar from './pages/tabs/ar/Tabs1';
+import Tabs2En from './pages/tabs/en/Tabs2';
+import Tabs2Ar from './pages/tabs/ar/Tabs2';
 import TabsMaterialScreen from './pages/tabs_material/TabsMaterialScreen';
 import SettingsScreen from './pages/settings/SettingsScreen';
 import { getData, LANGUAGE_KEY } from './utils/AsyncStorageUtils';
@@ -37,8 +40,8 @@ const contentOptions = {
 const DrawerNavigatorLeft = createDrawerNavigator(
   {
     DrawerNavigation: DrawerNavigationScreenEn,
-    Drawer1: DrawerScreen1,
-    Drawer2: DrawerScreen2,
+    Drawer1: DrawerScreen1En,
+    Drawer2: DrawerScreen2En,
   },
   {
     contentComponent: DrawerContentComponent,
@@ -51,8 +54,8 @@ const DrawerNavigatorLeft = createDrawerNavigator(
 const DrawerNavigatorRight = createDrawerNavigator(
   {
     DrawerNavigationAr: DrawerNavigationScreenAr,
-    Drawer1: DrawerScreen1,
-    Drawer2: DrawerScreen2,
+    Drawer1: DrawerScreen1Ar,
+    Drawer2: DrawerScreen2Ar,
   },
   {
     contentComponent: DrawerContentComponent,
@@ -77,12 +80,30 @@ const tabBarOptions = {
   inactiveTintColor: COLOR.blueGrey500,
 };
 
-// Bottom tab navigator for arabic.
+// Bottom tab navigator for English.
+const BottomTabNavigatorEn = createBottomTabNavigator(
+  {
+    TabsNavigation: TabsNavigationScreenEn,
+    Tab1: Tabs1En,
+    Tab2: Tabs2En,
+    Tab3: Tabs1En,
+    Tab4: Tabs2En,
+    Tab5: Tabs1En,
+    Tab6: Tabs2En,
+  },
+  { tabBarOptions },
+);
+
+// Bottom tab navigator for Arabic.
 const BottomTabNavigatorAr = createBottomTabNavigator(
   {
     TabsNavigation: TabsNavigationScreenAr,
-    Tabs1,
-    Tabs2,
+    Tab1: Tabs1Ar,
+    Tab2: Tabs2Ar,
+    Tab3: Tabs1Ar,
+    Tab4: Tabs2Ar,
+    Tab5: Tabs1Ar,
+    Tab6: Tabs2Ar,
   },
   {
     tabBarOptions: {
@@ -99,14 +120,49 @@ const BottomTabNavigatorAr = createBottomTabNavigator(
   },
 );
 
-// Bottom tab navigator for english.
-const BottomTabNavigatorEn = createBottomTabNavigator(
+const barStyle = { backgroundColor: COLOR.blueGrey500 };
+
+// Tab bar options for material bottom tab navigator.
+const MaterialBottomTabNavigatorConfig = {
+  activeColor: COLOR.white,
+  inactiveColor: 'rgba(255, 255, 255, 0.26)',
+  barStyle,
+};
+
+const MaterialBottomTabNavigatorEn = createMaterialBottomTabNavigator(
   {
     TabsNavigation: TabsNavigationScreenEn,
-    Tabs1,
-    Tabs2,
+    Tab1: Tabs1En,
+    Tab2: Tabs2En,
+    Tab3: Tabs1En,
+    Tab4: Tabs2En,
+    Tab5: Tabs1En,
+    Tab6: Tabs2En,
   },
-  { tabBarOptions },
+  MaterialBottomTabNavigatorConfig,
+);
+
+const MaterialBottomTabNavigatorAr = createMaterialBottomTabNavigator(
+  {
+    TabsNavigation: TabsNavigationScreenAr,
+    Tab1: Tabs1Ar,
+    Tab2: Tabs2Ar,
+    Tab3: Tabs1Ar,
+    Tab4: Tabs2Ar,
+    Tab5: Tabs1Ar,
+    Tab6: Tabs2Ar,
+  },
+  {
+    ...MaterialBottomTabNavigatorConfig,
+    ...{
+      barStyle: {
+        ...barStyle,
+        ...{
+          transform: [{ rotateY: '180deg' }],
+        },
+      },
+    },
+  },
 );
 
 // Setup app stack for opening inner app screens after splash as stack.
@@ -115,10 +171,10 @@ const AppStack = createStackNavigator(
     Main: MainScreen,
     DrawerNavigationLeft: DrawerNavigatorLeft,
     DrawerNavigationRight: DrawerNavigatorRight,
-    DrawerMaterial: DrawerMaterialScreen,
     TabsNavigationAr: BottomTabNavigatorAr,
     TabsNavigationEn: BottomTabNavigatorEn,
-    TabsNavigationMaterial: TabsNavigationMaterialScreen,
+    TabsNavigationMaterialEn: MaterialBottomTabNavigatorEn,
+    TabsNavigationMaterialAr: MaterialBottomTabNavigatorAr,
     TabsMaterial: TabsMaterialScreen,
     Settings: SettingsScreen,
   },

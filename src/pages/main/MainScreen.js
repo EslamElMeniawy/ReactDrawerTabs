@@ -102,13 +102,15 @@ export default class MainScreen extends Component {
           userLanguage === LANGUAGE_AR ? 'DrawerNavigationRight' : 'DrawerNavigationLeft',
           strings('drawer_navigation'),
         )}
-        {this.getAccentButton('DrawerMaterial', strings('drawer_material'))}
-        {this.getPrimaryButton(
+        {this.getAccentButton(
           userLanguage === LANGUAGE_AR ? 'TabsNavigationAr' : 'TabsNavigationEn',
           strings('tabs_navigation'),
         )}
-        {this.getAccentButton('TabsNavigationMaterial', strings('tabs_navigation_material'))}
-        {this.getPrimaryButton('TabsMaterial', strings('tabs_material'))}
+        {this.getPrimaryButton(
+          userLanguage === LANGUAGE_AR ? 'TabsNavigationMaterialAr' : 'TabsNavigationMaterialEn',
+          strings('tabs_navigation_material'),
+        )}
+        {this.getAccentButton('TabsMaterial', strings('tabs_material'))}
       </SafeAreaView>
     );
   }
